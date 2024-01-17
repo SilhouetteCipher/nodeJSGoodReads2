@@ -3,12 +3,13 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   
   function fetchRSSFeed() {
-    fetch('http://localhost:3000/fetch-rss')
+    const baseUrl = window.location.origin; // Gets the base URL of the current location
+    fetch(`${baseUrl}/fetch-rss`)
         .then(response => response.text())
         .then(str => new window.DOMParser().parseFromString(str, "text/xml"))
         .then(data => processFeed(data))
         .catch(err => console.log(err));
-  }
+}
   
   function processFeed(data) {
     const items = Array.from(data.querySelectorAll("item"));
