@@ -5,7 +5,7 @@ import fetch from 'node-fetch';
 import cors from 'cors';
 
 const app = express();
-const port = 9200;
+const port = process.env.PORT || 3000;
 
 // Enable All CORS Requests for simplicity, or configure as needed
 app.use(cors());
@@ -25,5 +25,5 @@ app.get('/fetch-rss', async (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`Server running at http://10.224.1.7:${port}`);
+    console.log(`Server running at http://localhost:${port}`);
 });
