@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   
   function fetchRSSFeed() {
-    fetch('http://localhost:9200/fetch-rss')
+    fetch('http://localhost:3000/fetch-rss')
         .then(response => response.text())
         .then(str => new window.DOMParser().parseFromString(str, "text/xml"))
         .then(data => processFeed(data))
