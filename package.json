@@ -1,13 +1,20 @@
 {
   "name": "nodejs-app",
   "version": "1.0.0",
+  "type": "module",
   "description": "A minimal Node.js web application.",
-  "main": "index.js",
+  "main": "server.js",
   "author": "alphasec",
   "license": "MIT",
-   "dependencies": {
-  },
   "scripts": {
-    "start": "node index.js"
+    "start": "node server.js"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "node-fetch": "^3.3.2"
   }
 }

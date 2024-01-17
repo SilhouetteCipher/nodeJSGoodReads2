@@ -1,0 +1,29 @@
+.feed-entry::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  
+  .feed-entry {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 0 auto; /* horizontally center the element */
+    width: 70%;
+  }
+  
+  .cover-image {
+    max-width: 200px;
+    height: auto;
+    margin-right: 10px;
+    float: left;
+  }
+  
+  .feed-entry h3 {
+    margin: 0 0 10px 0;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+  
+  .feed-entry p {
+    margin: 0;
+  }
+  
