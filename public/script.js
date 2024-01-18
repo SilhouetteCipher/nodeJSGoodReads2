@@ -1,5 +1,12 @@
 document.addEventListener('DOMContentLoaded', function() {
   fetchRSSFeed();
+
+  const slider = document.getElementById('item-slider');
+  const label = document.getElementById('slider-label');
+
+  slider.addEventListener('input', function() {
+    label.textContent = slider.value;
+  });
 });
 
 function fetchRSSFeed() {
@@ -13,7 +20,8 @@ function fetchRSSFeed() {
 
 function processFeed(data) {
   const items = Array.from(data.querySelectorAll("item"));
-  const randomItems = items.sort(() => 0.5 - Math.random()).slice(0, 5);
+  const sliderValue = document.getElementById('item-slider').value;
+  const randomItems = items.sort(() => 0.5 - Math.random()).slice(0, sliderValue);
 
   randomItems.forEach(item => {
     const title = item.querySelector("title").textContent;
@@ -65,3 +73,14 @@ function decodeHtmlEntities(text) {
   textArea.innerHTML = text;
   return textArea.value;
 }
+document.getElementById('refresh-button').addEventListener('click', function() {
+  // Clear the current feed entries
+  const container = document.getElementById('feed-container');
+  container.innerHTML = '';
+
+  // Fetch and display the new feed entries
+  fetchRSSFeed();
+});
+
+
+
