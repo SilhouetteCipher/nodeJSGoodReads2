@@ -11,13 +11,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function fetchRSSFeed() {
   const baseUrl = window.location.origin; // Gets the base URL of the current location
-  fetch(`${baseUrl}/fetch-rss`)
+  const shelfUrl = document.getElementById('url-input').value; // Get the value of the input box
+  fetch(`${baseUrl}/fetch-rss?shelfUrl=${encodeURIComponent(shelfUrl)}`)
       .then(response => response.text())
       .then(str => new window.DOMParser().parseFromString(str, "text/xml"))
       .then(data => processFeed(data))
       .catch(err => console.log(err));
 }
-
 function processFeed(data) {
   const items = Array.from(data.querySelectorAll("item"));
   const sliderValue = document.getElementById('item-slider').value;
@@ -73,6 +73,28 @@ function decodeHtmlEntities(text) {
   textArea.innerHTML = text;
   return textArea.value;
 }
+
+
+var shelfUrl = '';
+
+document.getElementById('save-url-button').addEventListener('click', function() {
+  shelfUrl = document.getElementById('url-input').value;
+  console.log(`Saved URL: ${shelfUrl}`);
+});
+
+document.getElementById('refresh-button').addEventListener('click', function() {
+  if (!shelfUrl) {
+    console.error('No URL saved. Please enter a URL and click "Save URL" before refreshing the feed.');
+    return;
+  }
+  console.log(`Fetching RSS feed from ${shelfUrl}`);
+  fetch(`/fetch-rss?shelfUrl=${encodeURIComponent(shelfUrl)}`)
+    .then(response => response.text())
+    .then(data => {
+      // Handle the fetched RSS data here
+    });
+});
+
 document.getElementById('refresh-button').addEventListener('click', function() {
   // Clear the current feed entries
   const container = document.getElementById('feed-container');
@@ -81,12 +103,5 @@ document.getElementById('refresh-button').addEventListener('click', function() {
   // Fetch and display the new feed entries
   fetchRSSFeed();
 });
-
-document.getElementById('save-url-button').addEventListener('click', function() {
-  var shelfUrl = document.getElementById('url-input').value;
-  // You can use the shelfUrl variable here
-  console.log(shelfUrl);
-});
-
 
 

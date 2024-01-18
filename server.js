@@ -13,10 +13,15 @@ app.use(express.static('public'));
 
 app.get('/fetch-rss', async (req, res) => {
     try {
-        const feedUrl = 'https://www.goodreads.com/review/list_rss/6488681?key=KX5MqFq81m7QFOl2FbIOteVWOe9dnpIbbPSvi8hB-G6QPpev&shelf=to-read';
+        const feedUrl = req.query.shelfUrl;
+        console.log(`Fetching RSS feed from ${feedUrl}`);
+        console.log('Query parameters:', req.query);
         const response = await fetch(feedUrl);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
         const data = await response.text();
-        res.type('application/xml');
+        
         res.send(data);
     } catch (error) {
         console.error('Error fetching RSS feed:', error);
