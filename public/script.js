@@ -3,17 +3,21 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   
   function fetchRSSFeed() {
-    const baseUrl = window.location.origin; // Gets the base URL of the current location
-    fetch(`${baseUrl}/fetch-rss`)
+    const rssUrl = document.getElementById('rss-url-input').value;
+    const baseUrl = window.location.origin;
+    console.log(rssUrl)
+    fetch(`${baseUrl}/fetch-rss?url=${encodeURIComponent(rssUrl)}`)
         .then(response => response.text())
         .then(str => new window.DOMParser().parseFromString(str, "text/xml"))
         .then(data => processFeed(data))
         .catch(err => console.log(err));
+
 }
   
   function processFeed(data) {
     const items = Array.from(data.querySelectorAll("item"));
     const randomItems = items.sort(() => 0.5 - Math.random()).slice(0, 5);
+    console.log(data)
   
     randomItems.forEach(item => {
       const title = item.querySelector("title").textContent;
