@@ -12,13 +12,9 @@ app.use(cors());
 app.use(express.static('public'));
 
 app.get('/fetch-rss', async (req, res) => {
-    const userUrl = req.query.url; // Get the URL from the query parameter
-    if (!userUrl) {
-        return res.status(400).send('No URL provided');
-    }
-
     try {
-        const response = await fetch(userUrl);
+        const feedUrl = 'https://www.goodreads.com/review/list_rss/6488681?key=KX5MqFq81m7QFOl2FbIOteVWOe9dnpIbbPSvi8hB-G6QPpev&shelf=to-read';
+        const response = await fetch(feedUrl);
         const data = await response.text();
         res.type('application/xml');
         res.send(data);
