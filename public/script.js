@@ -1,5 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
-  fetchRSSFeed();
+  const shelfUrl = document.getElementById('url-input').value; // Get the value of the input box
+  if (shelfUrl) {
+    fetchRSSFeed();
+  }
 
   const slider = document.getElementById('item-slider');
   const label = document.getElementById('slider-label');
@@ -9,9 +12,18 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
+window.onload = function() {
+  const shelfUrl = decodeURIComponent(document.cookie.replace(/(?:(?:^|.*;\s*)shelfUrl\s*\=\s*([^;]*).*$)|^.*$/, "$1"));
+  document.getElementById('url-input').value = shelfUrl;
+
+}
+
 function fetchRSSFeed() {
   const baseUrl = window.location.origin; // Gets the base URL of the current location
   const shelfUrl = document.getElementById('url-input').value; // Get the value of the input box
+
+
+
   fetch(`${baseUrl}/fetch-rss?shelfUrl=${encodeURIComponent(shelfUrl)}`)
       .then(response => response.text())
       .then(str => new window.DOMParser().parseFromString(str, "text/xml"))
@@ -77,25 +89,22 @@ function decodeHtmlEntities(text) {
 
 var shelfUrl = '';
 
-document.getElementById('save-url-button').addEventListener('click', function() {
-  shelfUrl = document.getElementById('url-input').value;
-  console.log(`Saved URL: ${shelfUrl}`);
-});
-
 document.getElementById('refresh-button').addEventListener('click', function() {
+  // Get the value of the input box
+  shelfUrl = document.getElementById('url-input').value;
+
   if (!shelfUrl) {
-    console.error('No URL saved. Please enter a URL and click "Save URL" before refreshing the feed.');
+    console.error('No URL entered. Please enter a URL before refreshing the feed.');
     return;
   }
-  console.log(`Fetching RSS feed from ${shelfUrl}`);
-  fetch(`/fetch-rss?shelfUrl=${encodeURIComponent(shelfUrl)}`)
-    .then(response => response.text())
-    .then(data => {
-      // Handle the fetched RSS data here
-    });
-});
 
-document.getElementById('refresh-button').addEventListener('click', function() {
+  // Save the URL to a cookie
+  console.log(`Saved URL: ${shelfUrl}`);
+  document.cookie = `shelfUrl=${encodeURIComponent(shelfUrl)}; path=/`;
+
+  // Log the value of the 'shelfUrl' cookie
+  console.log(`shelfUrl cookie: ${decodeURIComponent(document.cookie.replace(/(?:(?:^|.*;\s*)shelfUrl\s*\=\s*([^;]*).*$)|^.*$/, "$1"))}`);
+
   // Clear the current feed entries
   const container = document.getElementById('feed-container');
   container.innerHTML = '';
@@ -103,5 +112,3 @@ document.getElementById('refresh-button').addEventListener('click', function() {
   // Fetch and display the new feed entries
   fetchRSSFeed();
 });
-
-
