@@ -82,5 +82,11 @@ document.getElementById('refresh-button').addEventListener('click', function() {
   fetchRSSFeed();
 });
 
+document.getElementById('save-url-button').addEventListener('click', function() {
+  var shelfUrl = document.getElementById('url-input').value;
+  // You can use the shelfUrl variable here
+  console.log(shelfUrl);
+});
+
 
 

@@ -3,18 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Goodreads RSS Feed Display</title>
-    
-        <link rel="stylesheet" href="style.css">
-    
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <input type="text" id="url-input" placeholder="Enter URL here">
+    <button id="save-url-button">Save URL</button>
     <button id="refresh-button">Refresh Feed</button>
     <input type="range" min="1" max="5" value="1" id="item-slider">
     <label id="slider-label">How Many Picks?</label>
     <div id="feed-container">
         <!-- RSS feed entries will be displayed here -->
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>
