@@ -2,13 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Goodreads RSS Feed Display</title>
+    <title>Goodreads RSS Feed Display with ui</title>
     
         <link rel="stylesheet" href="style.css">
     
 </head>
 <body>
+    <input type="text" id="rss-url-input" placeholder="Enter RSS Feed URL">
+    <button onclick="fetchRSSFeed()">Fetch RSS Feed</button>
+
     <div id="feed-container">
+        
         <!-- RSS feed entries will be displayed here -->
     </div>
 
