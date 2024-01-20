@@ -1,3 +1,7 @@
+// Define your array of colors
+const colors = ['#ECDBD1', '#EC5938', '#F2E3BC', '#96BBBB',]; // replace with your actual colors
+let colorIndex = 0;
+
 document.addEventListener('DOMContentLoaded', function() {
   const shelfUrl = document.getElementById('url-input').value; // Get the value of the input box
   if (shelfUrl) {
@@ -38,8 +42,10 @@ function processFeed(data) {
   randomItems.forEach(item => {
     const title = item.querySelector("title").textContent;
     const link = item.querySelector("link").textContent;
+    const author = item.querySelector("author_name")?.textContent || 'Author not available';
     let imageUrl = item.querySelector("book_large_image_url")?.textContent || 'default-placeholder-image.jpg';
     imageUrl = decodeHtmlEntities(imageUrl);
+    console.log(author);
     
     // Extract the book description from the book_description node
     let bookDescription = item.querySelector("book_description")?.textContent || 'No description available.';
@@ -51,9 +57,17 @@ function processFeed(data) {
     // Here you can manipulate tempDiv like a normal DOM element if needed
 
     // Create and append HTML elements to display the content
-    const container = document.getElementById('feed-container');
-    const entryDiv = document.createElement('div');
-    entryDiv.className = 'feed-entry';
+    
+  // Inside your loop where you create the feed entries
+const container = document.getElementById('feed-container');
+const entryDiv = document.createElement('div');
+entryDiv.className = 'feed-entry';
+
+// Set the background color of the entryDiv
+entryDiv.style.backgroundColor = colors[colorIndex];
+
+// Increment colorIndex, and reset it to 0 if it's equal to the length of the colors array
+colorIndex = (colorIndex + 1) % colors.length;
 
     const coverImg = document.createElement('img');
     coverImg.src = imageUrl;
@@ -62,6 +76,8 @@ function processFeed(data) {
 
     const titleElement = document.createElement('h3');
     titleElement.textContent = title;
+    titleElement.className = 'my-title-class';
+  
 
     const descriptionElement = document.createElement('div');
     descriptionElement.innerHTML = bookDescription; // If HTML tags are used in description
@@ -71,10 +87,34 @@ function processFeed(data) {
     linkElement.href = link;
     linkElement.textContent = 'View on Goodreads';
     linkElement.target = '_blank';
+    linkElement.className = 'my-link-class';
 
-    entryDiv.appendChild(coverImg);
+    const authorElement = document.createElement('p');
+    authorElement.textContent = author;
+    authorElement.className = 'my-author-class';
+
+    const svgElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svgElement.setAttribute('width', '362');
+    svgElement.setAttribute('height', '2');
+    svgElement.setAttribute('viewBox', '0 0 362 2');
+    svgElement.style.fill = 'none';
+    svgElement.classList.add('my-svg-class');
+
+    const pathElement = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    pathElement.setAttribute('d', 'M0 1H361.5');
+    pathElement.style.stroke = 'black';
+    pathElement.style.strokeWidth = '1px';
+
+    
+    
+
+    //entryDiv.appendChild(coverImg);
+
+    //entryDiv.appendChild(descriptionElement);
     entryDiv.appendChild(titleElement);
-    entryDiv.appendChild(descriptionElement);
+    entryDiv.appendChild(authorElement);
+    entryDiv.appendChild(svgElement);
+    svgElement.appendChild(pathElement);
     entryDiv.appendChild(linkElement);
     container.appendChild(entryDiv);
   });
