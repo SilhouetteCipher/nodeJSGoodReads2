@@ -5,10 +5,10 @@
   }
   
   .feed-entry {
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin: 0 auto; /* horizontally center the element */
-    width: 70%;
+    display: inline-flex;
+    padding: 30px 35px 0px 28px;
+    align-items: center;
+    background: #ECDBD1;
   }
   
   .cover-image {
