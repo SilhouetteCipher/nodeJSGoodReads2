@@ -14,7 +14,7 @@
     align-items: flex-start;
     gap: 10px;
     min-height: 236px;
-    max-width: 600px;
+    
     justify-content: space-between; /* Add this line */
 }
   
@@ -26,7 +26,7 @@
   }
   
   .my-title-class {
-    width: 280px;
+    width: 380px;
     color: #000;
 font-family: Futura;
 font-size: 40px;
