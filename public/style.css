@@ -12,7 +12,7 @@
     align-items: center;
     flex-direction: column;
     align-items: flex-start;
-    gap: 10px;
+    gap: 0px;
     min-height: 236px;
     
     justify-content: space-between; /* Add this line */
@@ -52,6 +52,7 @@ margin-bottom: 65px;
     font-weight: 500;
     line-height: normal;
     margin-top: auto; /* Add this line */
+    margin-bottom: 15px;
 }
 
   .feed-entry p {
