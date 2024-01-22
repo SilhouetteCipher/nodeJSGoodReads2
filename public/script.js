@@ -54,17 +54,13 @@ function processFeed(data) {
     // Parse HTML-formatted description (if needed) and create a DOM element
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = bookDescription;
-    // Here you can manipulate tempDiv like a normal DOM element if needed
-
-    // Create and append HTML elements to display the content
-    
-  // Inside your loop where you create the feed entries
 const container = document.getElementById('feed-container');
 const entryDiv = document.createElement('div');
 entryDiv.className = 'feed-entry';
 
 // Set the background color of the entryDiv
 entryDiv.style.backgroundColor = colors[colorIndex];
+entryDiv.dataset.colorIndex = colorIndex;
 
 // Increment colorIndex, and reset it to 0 if it's equal to the length of the colors array
 colorIndex = (colorIndex + 1) % colors.length;
@@ -114,8 +110,10 @@ buttonImg.alt = 'View Change Button';
 buttonImg.className = 'my-button-class';
 
 buttonImg.addEventListener('click', function() {
-  // Handle the view change here
+  let colourIndex = this.parentElement.dataset.colorIndex;
+  showFullView(imageUrl, title, bookDescription, colourIndex);
   console.log('Button clicked!');
+  
 });
 
 // Add the button image to the entry div
@@ -128,6 +126,52 @@ entryDiv.appendChild(buttonImg);
     entryDiv.appendChild(linkElement);
     container.appendChild(entryDiv);
   });
+
+
+function showFullView(imageUrl, title, bookDescription, color) {
+  // Get the container
+  const container = document.getElementById('feed-container');
+
+  // Clear the entire container
+  container.innerHTML = '';
+
+  const imageContainer = document.createElement('div');
+  imageContainer.className = 'image-container';
+  imageContainer.style.backgroundColor = colors[color];
+
+  // Create a new div for the full view
+  const fullViewDiv = document.createElement('div');
+  fullViewDiv.className = 'full-view';
+  fullViewDiv.style.backgroundColor = colors[color];
+
+  // Create and append the cover image
+  const coverImg = document.createElement('img');
+  coverImg.src = imageUrl;
+  coverImg.alt = `Cover of ${title}`;
+  coverImg.className = 'full-view-image';
+  imageContainer.appendChild(coverImg);
+  fullViewDiv.appendChild(imageContainer);
+  
+  const imageOverlay = document.createElement('div');
+  imageOverlay.className = 'image-overlay';
+  imageOverlay.style.backgroundColor = colors[color];
+  imageContainer.appendChild(imageOverlay);
+
+  // Create and append the title
+  const titleElement = document.createElement('h2');
+  titleElement.textContent = title;
+  titleElement.className = 'full-view-title';
+  fullViewDiv.appendChild(titleElement);
+
+  // Create and append the full description
+  const descriptionElement = document.createElement('p');
+  descriptionElement.textContent = bookDescription;
+  descriptionElement.className = 'full-view-description';
+  fullViewDiv.appendChild(descriptionElement);
+
+  // Append the full view div to the container
+  container.appendChild(fullViewDiv);
+}
 }
 
 function decodeHtmlEntities(text) {
@@ -135,8 +179,6 @@ function decodeHtmlEntities(text) {
   textArea.innerHTML = text;
   return textArea.value;
 }
-
-
 var shelfUrl = '';
 
 document.getElementById('refresh-button').addEventListener('click', function() {
@@ -162,3 +204,4 @@ document.getElementById('refresh-button').addEventListener('click', function() {
   // Fetch and display the new feed entries
   fetchRSSFeed();
 });
+
