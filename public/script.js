@@ -108,8 +108,18 @@ colorIndex = (colorIndex + 1) % colors.length;
     
     
 
-    //entryDiv.appendChild(coverImg);
+const buttonImg = document.createElement('img');
+buttonImg.src = '/images/forward.png'; // Replace with your button image URL
+buttonImg.alt = 'View Change Button';
+buttonImg.className = 'my-button-class';
 
+buttonImg.addEventListener('click', function() {
+  // Handle the view change here
+  console.log('Button clicked!');
+});
+
+// Add the button image to the entry div
+entryDiv.appendChild(buttonImg);
     //entryDiv.appendChild(descriptionElement);
     entryDiv.appendChild(titleElement);
     entryDiv.appendChild(authorElement);

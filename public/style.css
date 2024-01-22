@@ -36,6 +36,7 @@ line-height: normal;
 margin-top: 30px;
 margin-right: 30px;
 margin-bottom: 65px;
+max-width: 500px;
   }
   
   .my-link-class {
@@ -76,5 +77,12 @@ bottom: 75px;
     position: absolute;
     bottom: 50px;
     
+  }
+
+  .my-button-class {
+    position: absolute;
+    left: 530px;
+    top: 50%;
+    transform: translateY(-50%);
   }
   
